@@ -14,8 +14,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Customer {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int customerId;
 	private String customerName;
 	private String customerEMail;
