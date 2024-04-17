@@ -26,29 +26,6 @@ public class AdminController {
 	public ResponseEntity<ResponseStructure<Admin>> saveAdmin(@RequestBody Admin admin){
 		return service.saveAdmin(admin);
 	}
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     @PutMapping
     public ResponseEntity<ResponseStructure<Admin>> updateAdmin(@RequestParam int adminId,@RequestBody Admin admin){
     	return service.updateAdmin(adminId,admin);

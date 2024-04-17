@@ -41,9 +41,7 @@ public class AdminService {
 //			how to raise the exception
 			throw new AdminIdNotFoundException("Sorry failed to update the data");
 		}
-		
 	}
-
 	public ResponseEntity<ResponseStructure<Admin>> findAdmin(int adminId) {
 		Admin dbAdmin=dao.findAdmin(adminId);
 		if(dbAdmin!=null) {
@@ -60,7 +58,6 @@ public class AdminService {
 			throw new AdminIdNotFoundException("Sorry failed to fetch the data");
 		}
 	}
-
 	public ResponseEntity<ResponseStructure<Admin>> deleteAdmin(int adminId) {
 		Admin dbAdmin=dao.deleteAdmin(adminId);
 		if(dbAdmin!=null) {
