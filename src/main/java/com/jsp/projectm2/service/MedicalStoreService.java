@@ -48,12 +48,16 @@ public class MedicalStoreService {
 			Address dbAddress=addressDao.findAddress(addressId);
 			if(dbAddress!=null) {
 //				adress is present then you can add store
+//				next 2-4 lines is added in 19-04-2024
+				store.setAdmin(dbAdmin);
+				store.setAddress(dbAddress);
 				MedicalStore dbMedicalStore=dao.saveMedicalStore(store);
+				dbAddress.setMedicalStore(dbMedicalStore);
 				dto.setManagerName(dbMedicalStore.getManagerName());
 				dto.setName(dbMedicalStore.getName());
 				dto.setPhone(dbMedicalStore.getPhone());
 				dto.setStoreId(dbMedicalStore.getStoreId());
-				
+				dto.setStoreId(dbMedicalStore.getStoreId());
 				Address address=dbMedicalStore.getAddress();
 				addressDto.setAddressId(address.getAddressId());
 				addressDto.setCity(address.getCity());
@@ -64,6 +68,7 @@ public class MedicalStoreService {
 				dto.setAddressDto(addressDto);
 				
 				Admin admin=dbMedicalStore.getAdmin();
+				
 				adminDto.setAdminEmail(admin.getAdminEmail());
 				adminDto.setAdminId(admin.getAdminId());
 				adminDto.setAdminName(admin.getAdminName());

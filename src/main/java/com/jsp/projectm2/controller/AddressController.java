@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jsp.projectm2.dto.AddressDto;
 import com.jsp.projectm2.entity.Address;
 import com.jsp.projectm2.service.AddressService;
 import com.jsp.projectm2.util.ResponseStructure;
@@ -23,24 +24,24 @@ public class AddressController {
 	private AddressService service;
 	
 	@PostMapping
-	public ResponseEntity<ResponseStructure<Address>> saveAddress(@RequestBody Address address){
+	public ResponseEntity<ResponseStructure<AddressDto>> saveAddress(@RequestBody Address address){
 		return service.saveAddress(address);
 	}
 	
 	@PutMapping
-	public ResponseEntity<ResponseStructure<Address>> updateAddress(@RequestParam int addressId,@RequestBody Address address){
+	public ResponseEntity<ResponseStructure<AddressDto>> updateAddress(@RequestParam int addressId,@RequestBody Address address){
 		return service.updateAddress(addressId,address);
 	}
 	
 	
 	@GetMapping
-	public ResponseEntity<ResponseStructure<Address>> findAddress(@RequestParam int addressId){
+	public ResponseEntity<ResponseStructure<AddressDto>> findAddress(@RequestParam int addressId){
 		return service.findAddress(addressId);
 	}
 	
 	
 	@DeleteMapping
-	public ResponseEntity<ResponseStructure<Address>> deleteAddress(@RequestParam int addressId){
+	public ResponseEntity<ResponseStructure<AddressDto>> deleteAddress(@RequestParam int addressId){
 		return service.deleteAddress(addressId);
 	}
 	
