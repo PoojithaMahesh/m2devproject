@@ -51,8 +51,9 @@ public class MedicalStoreService {
 //				next 2-4 lines is added in 19-04-2024
 				store.setAdmin(dbAdmin);
 				store.setAddress(dbAddress);
+				dbAddress.setMedicalStore(store);
 				MedicalStore dbMedicalStore=dao.saveMedicalStore(store);
-				dbAddress.setMedicalStore(dbMedicalStore);
+				
 				dto.setManagerName(dbMedicalStore.getManagerName());
 				dto.setName(dbMedicalStore.getName());
 				dto.setPhone(dbMedicalStore.getPhone());
@@ -164,7 +165,7 @@ public class MedicalStoreService {
 		
 		
 		ResponseStructure<MedicalStoreDto> structure=new ResponseStructure<>();
-		structure.setMessage("MedicalStore updated successfully");
+		structure.setMessage("MedicalStore fetched successfully");
 		structure.setHttpStatus(HttpStatus.FOUND.value());
 		structure.setData(dto);
 		return new ResponseEntity<ResponseStructure<MedicalStoreDto>>(structure,HttpStatus.FOUND);
@@ -206,7 +207,7 @@ public class MedicalStoreService {
 			
 			
 			ResponseStructure<MedicalStoreDto> structure=new ResponseStructure<>();
-			structure.setMessage("MedicalStore updated successfully");
+			structure.setMessage("MedicalStore deleted successfully");
 			structure.setHttpStatus(HttpStatus.FOUND.value());
 			structure.setData(dto);
 			return new ResponseEntity<ResponseStructure<MedicalStoreDto>>(structure,HttpStatus.FOUND);
