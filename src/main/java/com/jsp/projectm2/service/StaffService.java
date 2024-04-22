@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.jsp.projectm2.dao.AdminDao;
 import com.jsp.projectm2.dao.MedicalStoreDao;
 import com.jsp.projectm2.dao.StaffDao;
+import com.jsp.projectm2.dto.AdminDto;
+import com.jsp.projectm2.dto.MedicalStoreDto;
 import com.jsp.projectm2.dto.StaffDto;
 import com.jsp.projectm2.entity.Admin;
 import com.jsp.projectm2.entity.MedicalStore;
@@ -43,8 +45,19 @@ public class StaffService {
 			if(store!=null) {
 //				store is present
 				staff.setMedicalStore(store);
+				
 				Staff dbStaff=staffDao.saveStaff(staff);
+				
 				StaffDto dto=this.mapper.map(dbStaff, StaffDto.class);
+
+				Admin dbAdmin=dbStaff.getAdmin();
+				AdminDto adminDto=this.mapper.map(dbAdmin, AdminDto.class);
+				MedicalStore dbMedicalStore=dbStaff.getMedicalStore();
+				MedicalStoreDto medicalStoreDto=this.mapper.map(dbMedicalStore, MedicalStoreDto.class);
+				dto.setAdminDto(adminDto);
+				dto.setMedicalStoreDto(medicalStoreDto);
+				
+				
 				ResponseStructure<StaffDto> structure=new ResponseStructure<>();
 				structure.setMessage("Staff saved successfully");
 				structure.setHttpStatus(HttpStatus.CREATED.value());
@@ -63,6 +76,13 @@ public class StaffService {
 		if(dbStaff!=null) {
 //			id is present then updated successfully
 			StaffDto dto=this.mapper.map(dbStaff, StaffDto.class);
+			
+			Admin dbAdmin=dbStaff.getAdmin();
+			AdminDto adminDto=this.mapper.map(dbAdmin, AdminDto.class);
+			MedicalStore dbMedicalStore=dbStaff.getMedicalStore();
+			MedicalStoreDto medicalStoreDto=this.mapper.map(dbMedicalStore, MedicalStoreDto.class);
+			dto.setAdminDto(adminDto);
+			dto.setMedicalStoreDto(medicalStoreDto);
 			ResponseStructure<StaffDto> structure=new ResponseStructure<>();
 			structure.setMessage("Staff data updated successfully");
 			structure.setHttpStatus(HttpStatus.OK.value());
@@ -80,6 +100,14 @@ public class StaffService {
 		if(dbStaff!=null) {
 //			id is present then updated successfully
 			StaffDto dto=this.mapper.map(dbStaff, StaffDto.class);
+			
+			Admin dbAdmin=dbStaff.getAdmin();
+			AdminDto adminDto=this.mapper.map(dbAdmin, AdminDto.class);
+			MedicalStore dbMedicalStore=dbStaff.getMedicalStore();
+			MedicalStoreDto medicalStoreDto=this.mapper.map(dbMedicalStore, MedicalStoreDto.class);
+			dto.setAdminDto(adminDto);
+			dto.setMedicalStoreDto(medicalStoreDto);
+			
 			ResponseStructure<StaffDto> structure=new ResponseStructure<>();
 			structure.setMessage("Staff data fetched successfully");
 			structure.setHttpStatus(HttpStatus.FOUND.value());
@@ -97,6 +125,12 @@ public class StaffService {
 		if(dbStaff!=null) {
 //			id is present then updated successfully
 			StaffDto dto=this.mapper.map(dbStaff, StaffDto.class);
+			Admin dbAdmin=dbStaff.getAdmin();
+			AdminDto adminDto=this.mapper.map(dbAdmin, AdminDto.class);
+			MedicalStore dbMedicalStore=dbStaff.getMedicalStore();
+			MedicalStoreDto medicalStoreDto=this.mapper.map(dbMedicalStore, MedicalStoreDto.class);
+			dto.setAdminDto(adminDto);
+			dto.setMedicalStoreDto(medicalStoreDto);
 			ResponseStructure<StaffDto> structure=new ResponseStructure<>();
 			structure.setMessage("Staff data deleted successfully");
 			structure.setHttpStatus(HttpStatus.FOUND.value());

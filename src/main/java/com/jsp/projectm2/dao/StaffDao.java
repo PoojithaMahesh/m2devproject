@@ -21,6 +21,8 @@ public class StaffDao {
 	public Staff updateStaff(int staffId, Staff staff) {
 		Optional<Staff> optional=repo.findById(staffId);
 		if(optional.isPresent()) {
+			staff.setAdmin(optional.get().getAdmin());
+			staff.setMedicalStore(optional.get().getMedicalStore());
 			staff.setStaffId(staffId);
 			return repo.save(staff);
 		}
