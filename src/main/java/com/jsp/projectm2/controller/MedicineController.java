@@ -23,7 +23,7 @@ public class MedicineController {
 	@Autowired
 	private MedicineService service;
 	
-	
+//	hii
 	@PostMapping
 	public ResponseEntity<ResponseStructure<MedicineDto>> saveMedicine(@RequestParam int storeId,@RequestBody Medicine  medicine){
 		return service.saveMedicine(storeId,medicine);
