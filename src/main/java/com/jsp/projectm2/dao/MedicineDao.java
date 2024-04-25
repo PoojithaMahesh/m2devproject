@@ -44,6 +44,15 @@ public class MedicineDao {
 		}
 		return null;
 	}
+
+	public Medicine findMedicineByName(String medicineName) {
+		Optional<Medicine> optional=repo.findByName(medicineName);
+		if(optional.isPresent()) {
+//			medicine is present with that name
+			return optional.get();
+		}
+		return null;
+	}
     
     
 }

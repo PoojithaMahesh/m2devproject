@@ -25,7 +25,7 @@ public class MedicineController {
 	
 //	hii
 	@PostMapping
-	public ResponseEntity<ResponseStructure<MedicineDto>> saveMedicine(@RequestParam int storeId,@RequestBody Medicine  medicine){
+	public ResponseEntity<ResponseStructure<MedicineDto>> addMedicine(@RequestParam int storeId,@RequestBody Medicine  medicine){
 		return service.saveMedicine(storeId,medicine);
 	}
 	@PutMapping
@@ -43,4 +43,8 @@ public class MedicineController {
 		return service.deleteMedicine(medicineId);
 	}
 	
+	@GetMapping("/findbyname")
+	public ResponseEntity<ResponseStructure<MedicineDto>> findMedicineByName(@RequestParam String medicineName){
+		return service.findMedicineByName(medicineName);
+	}
 }
