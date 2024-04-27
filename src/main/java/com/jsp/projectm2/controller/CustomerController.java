@@ -29,7 +29,8 @@ public class CustomerController {
 		return service.signUpCustomer(addressId,customer);
 	}
 	@PutMapping
-	public ResponseEntity<ResponseStructure<CustomerDto>> updateCustomer(@RequestParam int customerId,@RequestBody Customer customer){
+	public ResponseEntity<ResponseStructure<CustomerDto>> updateCustomer(@RequestParam int customerId,
+			@RequestBody Customer customer){
 		return service.updateCustomer(customerId,customer);
 	}
 	@GetMapping
@@ -40,4 +41,23 @@ public class CustomerController {
 	public ResponseEntity<ResponseStructure<CustomerDto>> deleteCustomer(@RequestParam int customerId){
 		return service.deleteCustomer(customerId);
 	}
+	
+	
+	@GetMapping("/login")
+	public ResponseEntity<ResponseStructure<CustomerDto>> loginCustomer(@RequestParam String email,
+			@RequestParam String password){
+		return service.loginCustomer(email,password);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

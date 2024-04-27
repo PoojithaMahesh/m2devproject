@@ -19,6 +19,8 @@ import com.jsp.projectm2.entity.Bookings;
 import com.jsp.projectm2.entity.Customer;
 import com.jsp.projectm2.exception.AddressIdNotFoundException;
 import com.jsp.projectm2.exception.CustomerIdNotFoundException;
+import com.jsp.projectm2.exception.CustomerPasswordNotFoundException;
+import com.jsp.projectm2.exception.CustometEmailNotFoundException;
 import com.jsp.projectm2.util.ResponseStructure;
 
 @Service
@@ -34,6 +36,7 @@ public class CustomerService {
 	public ResponseEntity<ResponseStructure<CustomerDto>> signUpCustomer(int addressId, Customer customer) {
 		Address dbAddress=addressDao.findAddress(addressId);
 		if(dbAddress!=null) {
+			dbAddress.setCustomer(customer);
 //			that address is present then i can save cutomer
 			List<Address> addresses=new ArrayList<Address>();
 			addresses.add(dbAddress);
@@ -41,20 +44,20 @@ public class CustomerService {
 			Customer dbCustomer=dao.saveCustomer(customer);
 			CustomerDto dto=mapper.map(dbCustomer, CustomerDto.class);
 			List<Address> list=dbCustomer.getAddresses();
-			List<AddressDto> dtos=null;
+			List<AddressDto> dtos=new ArrayList<>();
 			for(Address address:list) {
 				AddressDto addressDto=this.mapper.map(address, AddressDto.class);
 				dtos.add(addressDto);
 			}
-			List<Bookings> bookings=dbCustomer.getBookings();
-			List<BookingDto> bookingDtos=null;
-			for(Bookings b:bookings) {
-				BookingDto bookingDto=this.mapper.map(b, BookingDto.class);
-				bookingDtos.add(bookingDto);
-			}
+//			List<Bookings> bookings=dbCustomer.getBookings();
+//			List<BookingDto> bookingDtos=new ArrayList<>();
+//			for(Bookings b:bookings) {
+//				BookingDto bookingDto=this.mapper.map(b, BookingDto.class);
+//				bookingDtos.add(bookingDto);
+//			}
 			dto.setAddressDtos(dtos);
-			dto.setBookingDtos(bookingDtos);
-			
+//			dto.setBookingDtos(bookingDtos);
+//			
 			ResponseStructure<CustomerDto> structure=new ResponseStructure<CustomerDto>();
 			structure.setMessage("Customer saved successfully");
 			structure.setHttpStatus(HttpStatus.CREATED.value());
@@ -77,14 +80,14 @@ public class CustomerService {
 				AddressDto addressDto=this.mapper.map(address, AddressDto.class);
 				dtos.add(addressDto);
 			}
-			List<Bookings> bookings=dbCustomer.getBookings();
-			List<BookingDto> bookingDtos=null;
-			for(Bookings b:bookings) {
-				BookingDto bookingDto=this.mapper.map(b, BookingDto.class);
-				bookingDtos.add(bookingDto);
-			}
+//			List<Bookings> bookings=dbCustomer.getBookings();
+//			List<BookingDto> bookingDtos=null;
+//			for(Bookings b:bookings) {
+//				BookingDto bookingDto=this.mapper.map(b, BookingDto.class);
+//				bookingDtos.add(bookingDto);
+//			}
 			dto.setAddressDtos(dtos);
-			dto.setBookingDtos(bookingDtos);
+//			dto.setBookingDtos(bookingDtos);
 			
 			ResponseStructure<CustomerDto> structure=new ResponseStructure<CustomerDto>();
 			structure.setMessage("Customer updated successfully");
@@ -103,13 +106,13 @@ public class CustomerService {
 //			that id is present 
 			CustomerDto dto=mapper.map(dbCustomer, CustomerDto.class);
 			List<Address> list=dbCustomer.getAddresses();
-			List<AddressDto> dtos=null;
+			List<AddressDto> dtos=new ArrayList<>();
 			for(Address address:list) {
 				AddressDto addressDto=this.mapper.map(address, AddressDto.class);
 				dtos.add(addressDto);
 			}
 			List<Bookings> bookings=dbCustomer.getBookings();
-			List<BookingDto> bookingDtos=null;
+			List<BookingDto> bookingDtos=new ArrayList<BookingDto>();
 			for(Bookings b:bookings) {
 				BookingDto bookingDto=this.mapper.map(b, BookingDto.class);
 				bookingDtos.add(bookingDto);
@@ -156,6 +159,27 @@ public class CustomerService {
 		}else {
 //			customer Id is not present
 			throw new CustomerIdNotFoundException("Sorry failed to delete the customer");
+		}
+	}
+
+	public ResponseEntity<ResponseStructure<CustomerDto>> loginCustomer(String email, String password) {
+		Customer dbCustomer=dao.findCustomerByEMail(email);
+		if(dbCustomer!=null) {
+//			that customer is present with this email
+			if(password.equals(dbCustomer.getPassword())) {
+//				that password is present then it is a Login  success
+				CustomerDto dto=this.mapper.map(dbCustomer, CustomerDto.class);
+				ResponseStructure<CustomerDto> structure=new ResponseStructure<CustomerDto>();
+				structure.setMessage("Customer Login successfully");
+				structure.setHttpStatus(HttpStatus.FOUND.value());
+				structure.setData(dto);
+				return new ResponseEntity<ResponseStructure<CustomerDto>>(structure,HttpStatus.FOUND);
+			}else {
+				throw  new  CustomerPasswordNotFoundException("Sorry failed to Login ");
+			}
+		}else {
+//			that customer is not present with this email means invalid email
+			throw new CustometEmailNotFoundException("Sorry failed to Login ");
 		}
 	}
 	

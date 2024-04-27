@@ -53,4 +53,12 @@ public class CustomerDao {
 		}
 		return null;
 	}
+
+	public Customer findCustomerByEMail(String email) {
+		Optional<Customer> optional=repo.findbyEmail(email);
+		if(optional.isPresent()) {
+			return optional.get();
+		}
+		return null;
+	}
 }
